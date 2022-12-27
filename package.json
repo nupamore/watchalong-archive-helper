@@ -1,0 +1,46 @@
+{
+  "name": "watchalong-archive-helper",
+  "version": "0.0.1",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint:fix": "eslint ./src --ext .js,.jsx,.ts,.tsx,.vue --fix && stylelint \"src/**/*.{css,scss,vue}\" --fix"
+  },
+  "volta": {
+    "node": "18.12.0",
+    "yarn": "1.22.18"
+  },
+  "dependencies": {
+    "plyr": "^3.7.3",
+    "unocss": "^0.47.6",
+    "vue": "^3.2.45",
+    "vue-router": "^4.1.6",
+    "vue-winbox": "^0.2.1"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.26.1",
+    "@types/node": "^18.11.18",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "eslint": "^8.22.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "postcss": "8",
+    "postcss-html": "^1.5.0",
+    "prettier": "^2.7.1",
+    "sass": "^1.57.1",
+    "stylelint": "^14.11.0",
+    "stylelint-config-hudochenkov": "^8.0.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-recommended-vue": "^1.4.0",
+    "stylelint-config-standard-scss": "^5.0.0",
+    "stylelint-order": "^5.0.0",
+    "stylelint-prettier": "^2.0.0",
+    "stylelint-scss": "^4.3.0",
+    "typescript": "^4.6.4",
+    "vite": "^4.0.3",
+    "vite-plugin-pages": "^0.28.0"
+  }
+}
