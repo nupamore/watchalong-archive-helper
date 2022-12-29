@@ -1,12 +1,27 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import Plyr from 'plyr'
+import { useControlStore } from '@/stores/control'
 
+const props = defineProps<{
+  src: string
+  diff?: number
+  main?: boolean
+}>()
+
+const controlStore = useControlStore()
 const playerRef = ref()
 
-onMounted(() => {
-  console.log(playerRef.value)
+onMounted(async () => {
   const player = new Plyr(playerRef.value)
+  controlStore.addPlayer(player, props.diff || 0, props.main)
+
+  player.on('play', event => {
+    controlStore.play(event, props.main)
+  })
+  player.on('pause', () => {
+    controlStore.pause()
+  })
 })
 </script>
 
@@ -17,7 +32,7 @@ onMounted(() => {
       autosize: true,
     }"
     data-plyr-provider="youtube"
-    data-plyr-embed-id="bTqVqk7FSmY"
+    :data-plyr-embed-id="src"
   ></div>
 </template>
 
@@ -25,7 +40,8 @@ onMounted(() => {
 .wb-body {
   display: flex;
   justify-content: center;
-  margin: 0 auto;
+  margin: auto;
   background: #000;
+  text-align: center;
 }
 </style>
