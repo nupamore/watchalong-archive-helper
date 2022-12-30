@@ -4,22 +4,26 @@ import Plyr from 'plyr'
 import { useControlStore } from '@/stores/control'
 
 const props = defineProps<{
+  id: number
   src: string
   diff?: number
-  main?: boolean
 }>()
 
 const controlStore = useControlStore()
-const playerRef = ref()
+const plyrRef = ref()
 
 onMounted(async () => {
-  const player = new Plyr(playerRef.value)
-  controlStore.addPlayer(player, props.diff || 0, props.main)
-
-  player.on('play', event => {
-    controlStore.play(event, props.main)
+  const plyr = new Plyr(plyrRef.value)
+  controlStore.addPlayer({
+    id: props.id,
+    plyr,
+    diff: props.diff || 0,
   })
-  player.on('pause', () => {
+
+  plyr.on('play', event => {
+    controlStore.play(event, props.id)
+  })
+  plyr.on('pause', () => {
     controlStore.pause()
   })
 })
@@ -27,7 +31,7 @@ onMounted(async () => {
 
 <template>
   <div
-    ref="playerRef"
+    ref="plyrRef"
     :options="{
       autosize: true,
     }"

@@ -2,36 +2,31 @@ import { defineStore } from 'pinia'
 import type Plyr from 'plyr'
 import { ref } from 'vue'
 
-let lastPlayerId = 0
 interface Player {
   id: number
   plyr: Plyr
   diff: number
-  isMain: boolean
 }
 
 export const useControlStore = defineStore('control', () => {
-  const players = ref<Set<Player>>(new Set())
-  const mainPlayer = ref<Plyr>()
+  const players = ref<Map<number, Player>>(new Map())
+  const mainPlayer = ref<Player>()
 
-  function addPlayer(player: Plyr, diff: number, isMain?: boolean) {
-    players.value.add({
-      id: lastPlayerId++,
-      plyr: player,
-      diff,
-      isMain: isMain || false,
-    })
-    if (isMain) {
+  function addPlayer(player: Player) {
+    players.value.set(player.id, player)
+    if (player.id === 1) {
       mainPlayer.value = player
     }
   }
 
-  function play(event: Plyr.PlyrEvent, isMain?: boolean) {
+  function play(event: Plyr.PlyrEvent, id: number) {
     players.value.forEach(player => {
       if (!player.plyr.paused) {
         return
       }
-      player.plyr.currentTime = event.detail.plyr.currentTime + player.diff
+      const d = players.value.get(1)?.diff || 0
+      player.plyr.currentTime =
+        event.detail.plyr.currentTime + (id === 0 ? d : -d)
       player.plyr.play()
     })
   }
@@ -40,5 +35,12 @@ export const useControlStore = defineStore('control', () => {
     players.value.forEach(({ plyr }) => plyr.pause())
   }
 
-  return { players, addPlayer, play, pause }
+  function setDiff(id: number, diff: number) {
+    const player = players.value.get(id)
+    if (player) {
+      player.diff = diff
+    }
+  }
+
+  return { players, addPlayer, play, pause, setDiff }
 })
