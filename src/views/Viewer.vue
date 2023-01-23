@@ -5,16 +5,16 @@ import Player from '@/components/Player.vue'
 import { useControlStore } from '@/stores/control'
 
 interface YoutubeLiveDetail {
-  actualStartTime: '2022-12-22T10:48:28Z'
-  actualEndTime: '2022-12-22T12:41:26Z'
-  scheduledStartTime: '2022-12-22T10:45:00Z'
+  actualStartTime: string
+  actualEndTime: string
+  scheduledStartTime: string
 }
 
 const winboxRef1 = ref()
 const winboxRef2 = ref()
 
-const id1 = ref('Aeba39HULDI')
-const id2 = ref('j5zFnCC7q2c')
+const id1 = ref('HhvtZqSPE7E')
+const id2 = ref('-msSr0eBZ6Y')
 
 const diff = ref<number>()
 const controlStore = useControlStore()
